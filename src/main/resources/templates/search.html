@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Page</title>
+    <link rel="stylesheet" href="/css/common-styles.css" />
+    <link rel="stylesheet" href="/css/search-styles.css" />
+  </head>
+  <body>
+    <script src="/js/search-script.js"></script>
+    <div class="container">
+      <div style="margin: 0 auto; padding: 1rem; margin-bottom: 4rem">
+        <!-- Search Form -->
+        <section>
+          <form id="searchForm" class="search-form">
+            <svg
+              class="search-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search for food"
+            />
+          </form>
+        </section>
+
+        <!-- Genre List -->
+        <section class="genre-list">
+          <div id="genreContainer"></div>
+        </section>
+
+        <!-- Store List -->
+        <section class="store-list" id="storeContainer"></section>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="no-results hidden">
+          該当する店舗は見つかりませんでした
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

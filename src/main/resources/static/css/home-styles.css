@@ -1,0 +1,12 @@
+/* Home Page Specific Styles */
+.genre-box {
+    background-color: white;
+}
+
+.genre-box a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
