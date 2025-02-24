@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search Page</title>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
     <script type="module" src="/js/sampleData.js"></script>
     <script type="module" src="/js/search.js"></script>
     <link rel="stylesheet" href="/css/common.css" />
@@ -12,8 +17,7 @@
   <body>
     <div class="container">
       <div class="main-content">
-        <!-- Search Form -->
-        <form id="searchForm" class="search-form">
+        <form class="search-form">
           <input
             type="text"
             id="searchInput"
@@ -21,8 +25,11 @@
             placeholder="店舗名・ジャンルで検索"
           />
         </form>
-        <!-- Genre List -->
-        <section class="genre-list" id="genreContainer">
+        <section class="genre-list"></section>
+        <section class="store-list"></section>
+        <div class="no-results hidden">該当する店舗は見つかりませんでした</div>
+
+        <!-- <section class="genre-list">
           <div class="genre-box">
             <img src="/images/ramen.jpeg" alt="" />
             <p>ラーメン</p>
@@ -36,9 +43,7 @@
             <p>カレー</p>
           </div>
         </section>
-
-        <!-- Store List -->
-        <section class="store-list" id="storeContainer">
+        <section class="store-list">
           <div class="store-box">
             <a href="#">
               <div class="store-image-container">
@@ -55,12 +60,7 @@
               <div class="store-name">寿司次郎</div>
             </a>
           </div>
-        </section>
-
-        <!-- No Results Message -->
-        <div id="noResults" class="no-results hidden">
-          該当する店舗は見つかりませんでした
-        </div>
+        </section> -->
       </div>
     </div>
   </body>

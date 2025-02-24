@@ -9,13 +9,13 @@ export const genres = [
 export const stores = [
   {
     restaurantId: 1,
-    restaurantName: "ラーメン太郎",
+    restaurantName: "らあめん太郎",
     imageUrl: "/images/ramen.jpeg",
     genreId: [1],
   },
   {
     restaurantId: 2,
-    restaurantName: "寿司次郎寿司次郎寿司次郎寿司次郎寿司次郎寿司次郎",
+    restaurantName: "鮨次郎鮨次郎鮨次郎鮨次郎鮨次郎鮨次郎鮨次郎鮨次郎",
     imageUrl: "/images/ramen.jpeg",
     genreId: [2],
   },

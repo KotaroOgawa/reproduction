@@ -40,7 +40,6 @@ function renderStoreList() {
   $(".store-list").html(storeHtml);
 }
 
-// DOM読み込み完了時に実行
 $(function () {
   renderGenreList();
   renderStoreList();

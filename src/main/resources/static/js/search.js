@@ -1,7 +1,119 @@
 import { genres, stores } from "./sampleData.js";
 
-// let selectedGenreId = -1;
-// let hasSearched = false;
+// ジャンルリスト生成メソッド
+function renderGenreList() {
+  const genreHtml = genres
+    .map(
+      (genre) =>
+        `<div class="genre-box" data-genre-id="${genre.id}">
+          <img src="/images/ramen.jpeg" alt="${genre.name}">
+          <p>${genre.name}</p>
+        </div>`
+    )
+    .join("");
+  $(".genre-list").html(genreHtml);
+
+  // ジャンルクリックのイベントハンドラを設定
+  $(".genre-box").on("click", function () {
+    // 選択状態の更新
+    updateGenreSelection($(this));
+
+    // フィルタリング処理
+    const genreId = $(this).data("genre-id");
+    filterStoresByGenre(genreId);
+  });
+}
+
+// ジャンルの選択状態を更新するメソッド
+function updateGenreSelection($clickedGenre) {
+  // 全てのジャンルボックスから選択状態を解除
+  $(".genre-box").removeClass("selected");
+  // クリックされたジャンルボックスに選択状態を適用
+  $clickedGenre.addClass("selected");
+}
+
+// 店舗のフィルタリングを行うメソッド
+function filterStoresByGenre(genreId) {
+  // 検索フォームをクリア
+  $(".search-input").val("");
+  const filteredStores = stores.filter((store) =>
+    store.genreId.includes(genreId)
+  );
+  renderStoreList(filteredStores);
+}
+
+// 検索処理メソッド
+function handleSearch(searchText) {
+  // 検索文字列の正規化（小文字化、前後の空白削除）
+  searchText = searchText.toLowerCase().trim();
+
+  // ジャンル選択を解除
+  $(".genre-box").removeClass("selected");
+
+  // 店舗のフィルタリング
+  const filteredStores = stores.filter((store) => {
+    // まず店舗名で検索
+    if (store.restaurantName.toLowerCase().includes(searchText)) {
+      return true; // 店舗名で一致すればジャンル検索をスキップ
+    }
+
+    // 店舗名で一致しない場合のみジャンル検索を実行
+    return genres.some(
+      (genre) =>
+        store.genreId.includes(genre.id) &&
+        genre.name.toLowerCase().includes(searchText)
+    );
+  });
+  renderStoreList(filteredStores);
+}
+
+// 店舗リスト生成メソッド
+// ES6以降のデフォルト値の設定方法
+// function 関数名(引数 = デフォルト値) {
+function renderStoreList(storeList) {
+  const $noResults = $(".no-results");
+  const $storeList = $(".store-list");
+
+  // 店舗が0件の場合
+  if (storeList.length === 0) {
+    $noResults.removeClass("hidden");
+    $storeList.html(""); // 店舗リストを空にする
+    return;
+  }
+  // 店舗がある場合
+  $noResults.addClass("hidden");
+
+  const storeHtml = storeList
+    .map(
+      (store) =>
+        `<div class="store-box">
+          <div class="store-image-container">
+            <img src="${store.imageUrl}" alt="" class="store-image">
+          </div>
+          <h1 class="store-name">
+            ${
+              store.restaurantName.length > 14
+                ? `${store.restaurantName.slice(0, 14)}...`
+                : store.restaurantName
+            }
+          </h1>
+        </div>`
+    )
+    .join("");
+  $storeList.html(storeHtml);
+}
+
+$(function () {
+  renderGenreList();
+  // 検索入力のイベントハンドラを設定
+  $(".search-input").on("input", function () {
+    handleSearch($(this).val());
+  });
+  // フォームのデフォルト送信を防止
+  $(".search-form").on("submit", function (e) {
+    e.preventDefault();
+  });
+});
 
 // // ジャンルリストの生成
 // function renderGenres() {
