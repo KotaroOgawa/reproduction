@@ -10,13 +10,21 @@ export const stores = [
   {
     restaurantId: 1,
     restaurantName: "らあめん太郎",
-    imageUrl: "/images/ramen.jpeg",
     genreId: [1],
   },
   {
     restaurantId: 2,
     restaurantName: "鮨次郎鮨次郎鮨次郎鮨次郎鮨次郎鮨次郎鮨次郎鮨次郎",
-    imageUrl: "/images/ramen.jpeg",
     genreId: [2],
+  },
+  {
+    restaurantId: 3,
+    restaurantName: "インドカレー屋",
+    genreId: [3],
+  },
+  {
+    restaurantId: 4,
+    restaurantName: "インド",
+    genreId: [3],
   },
 ];

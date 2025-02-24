@@ -44,32 +44,35 @@ function filterStoresByGenre(genreId) {
 
 // 検索処理メソッド
 function handleSearch(searchText) {
-  // 検索文字列の正規化（小文字化、前後の空白削除）
+  // 検索文字列の正規化
   searchText = searchText.toLowerCase().trim();
+
+  // 検索文字列が短すぎる場合は空のリストを表示
+  if (searchText.length < 2) {
+    renderStoreList([]);
+    return;
+  }
 
   // ジャンル選択を解除
   $(".genre-box").removeClass("selected");
 
   // 店舗のフィルタリング
   const filteredStores = stores.filter((store) => {
-    // まず店舗名で検索
-    if (store.restaurantName.toLowerCase().includes(searchText)) {
-      return true; // 店舗名で一致すればジャンル検索をスキップ
-    }
-
-    // 店舗名で一致しない場合のみジャンル検索を実行
-    return genres.some(
+    const matchesStoreName = store.restaurantName
+      .toLowerCase()
+      .includes(searchText);
+    const matchesGenreName = genres.some(
       (genre) =>
         store.genreId.includes(genre.id) &&
         genre.name.toLowerCase().includes(searchText)
     );
+    return matchesStoreName || matchesGenreName;
   });
+
   renderStoreList(filteredStores);
 }
 
 // 店舗リスト生成メソッド
-// ES6以降のデフォルト値の設定方法
-// function 関数名(引数 = デフォルト値) {
 function renderStoreList(storeList) {
   const $noResults = $(".no-results");
   const $storeList = $(".store-list");
@@ -88,7 +91,7 @@ function renderStoreList(storeList) {
       (store) =>
         `<div class="store-box">
           <div class="store-image-container">
-            <img src="${store.imageUrl}" alt="" class="store-image">
+            <img src="/images/ramen.jpeg" alt="" class="store-image">
           </div>
           <h1 class="store-name">
             ${
