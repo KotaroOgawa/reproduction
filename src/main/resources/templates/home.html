@@ -4,15 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
-    <script type="text/javascript" src="/js/home.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="/js/sampleData.js"></script>
+    <script type="module" src="/js/home.js"></script>
     <link rel="stylesheet" href="/css/common.css" />
     <link rel="stylesheet" href="/css/home.css" />
   </head>
   <body>
     <div class="container">
       <div class="main-content">
-        <!-- Genre List -->
-        <section class="genre-list">
+        <section class="genre-list"></section>
+        <section class="store-list"></section>
+
+        <!-- <section class="genre-list">
           <div class="genre-box">
             <a href="#">
               <img src="/images/ramen.jpeg" alt="" />
@@ -33,7 +41,6 @@
           </div>
         </section>
 
-        <!-- Store List -->
         <section class="store-list">
           <div class="store-box">
             <a href="#">
@@ -51,7 +58,7 @@
               <div class="store-name">寿司次郎</div>
             </a>
           </div>
-        </section>
+        </section> -->
       </div>
     </div>
   </body>

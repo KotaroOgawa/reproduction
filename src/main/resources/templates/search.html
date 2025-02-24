@@ -4,15 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search Page</title>
-    <script type="text/javascript" src="/js/search.js"></script>
+    <script type="module" src="/js/sampleData.js"></script>
+    <script type="module" src="/js/search.js"></script>
     <link rel="stylesheet" href="/css/common.css" />
     <link rel="stylesheet" href="/css/search.css" />
   </head>
   <body>
     <div class="container">
       <div class="main-content">
+        <!-- Search Form -->
+        <form id="searchForm" class="search-form">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="店舗名・ジャンルで検索"
+          />
+        </form>
         <!-- Genre List -->
-        <section class="genre-list">
+        <section class="genre-list" id="genreContainer">
           <div class="genre-box">
             <img src="/images/ramen.jpeg" alt="" />
             <p>ラーメン</p>
@@ -28,7 +38,7 @@
         </section>
 
         <!-- Store List -->
-        <section class="store-list">
+        <section class="store-list" id="storeContainer">
           <div class="store-box">
             <a href="#">
               <div class="store-image-container">
