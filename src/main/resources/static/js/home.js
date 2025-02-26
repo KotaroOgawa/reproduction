@@ -1,7 +1,19 @@
-import { genres, stores } from "./sampleData.js";
+import { stores } from "./sampleData.js";
+
+// ジャンルデータ取得
+function fetchGenres() {
+  return $.ajax({
+    url: "http://localhost:8080/api/common/select-options/genre",
+    method: "GET",
+    dataType: "json",
+  }).fail(function (error) {
+    alert("ジャンルデータの取得に失敗しました", error);
+    return [];
+  });
+}
 
 // ジャンルリスト生成メソッド
-function renderGenreList() {
+function renderGenreList(genres) {
   const genreHtml = genres
     .map(
       (genre) =>
@@ -40,7 +52,10 @@ function renderStoreList() {
   $(".store-list").html(storeHtml);
 }
 
+// 初期化処理
 $(function () {
-  renderGenreList();
+  fetchGenres().then(function (genres) {
+    renderGenreList(genres);
+  });
   renderStoreList();
 });
