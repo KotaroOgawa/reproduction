@@ -1,7 +1,11 @@
-import { genres, stores } from "./sampleData.js";
+import { fetchGenres, fetchRestaurantsWithLogos } from "./restaurantApi.js";
 
-// ジャンルリスト生成メソッド
-function renderGenreList() {
+// グローバル変数としてデータを保持
+let allGenres = [];
+let allStores = [];
+
+// ジャンルリスト生成
+function renderGenreList(genres) {
   const genreHtml = genres
     .map(
       (genre) =>
@@ -13,7 +17,6 @@ function renderGenreList() {
     .join("");
   $(".genre-list").html(genreHtml);
 
-  // ジャンルクリックのイベントハンドラを設定
   $(".genre-box").on("click", function () {
     // 選択状態の更新
     updateGenreSelection($(this));
@@ -24,7 +27,7 @@ function renderGenreList() {
   });
 }
 
-// ジャンルの選択状態を更新するメソッド
+// ジャンルの選択状態更新
 function updateGenreSelection($clickedGenre) {
   // 全てのジャンルボックスから選択状態を解除
   $(".genre-box").removeClass("selected");
@@ -32,17 +35,20 @@ function updateGenreSelection($clickedGenre) {
   $clickedGenre.addClass("selected");
 }
 
-// 店舗のフィルタリングを行うメソッド
+// 店舗のフィルタリング
 function filterStoresByGenre(genreId) {
   // 検索フォームをクリア
   $(".search-input").val("");
-  const filteredStores = stores.filter((store) =>
+
+  // 店舗データに対してフィルタリング
+  const filteredStores = allStores.filter((store) =>
     store.genreId.includes(genreId)
   );
+
   renderStoreList(filteredStores);
 }
 
-// 検索処理メソッド
+// 検索処理
 function handleSearch(searchText) {
   // 検索文字列の正規化
   searchText = searchText.toLowerCase().trim();
@@ -57,11 +63,11 @@ function handleSearch(searchText) {
   $(".genre-box").removeClass("selected");
 
   // 店舗のフィルタリング
-  const filteredStores = stores.filter((store) => {
+  const filteredStores = allStores.filter((store) => {
     const matchesStoreName = store.restaurantName
       .toLowerCase()
       .includes(searchText);
-    const matchesGenreName = genres.some(
+    const matchesGenreName = allGenres.some(
       (genre) =>
         store.genreId.includes(genre.id) &&
         genre.name.toLowerCase().includes(searchText)
@@ -72,46 +78,71 @@ function handleSearch(searchText) {
   renderStoreList(filteredStores);
 }
 
-// 店舗リスト生成メソッド
+// 店舗リスト生成
 function renderStoreList(storeList) {
   const $noResults = $(".no-results");
   const $storeList = $(".store-list");
 
   // 店舗が0件の場合
   if (storeList.length === 0) {
+    // 0件メッセージを表示
     $noResults.removeClass("hidden");
-    $storeList.html(""); // 店舗リストを空にする
+    // 店舗リストをクリア
+    $storeList.html("");
     return;
   }
   // 店舗がある場合
   $noResults.addClass("hidden");
 
   const storeHtml = storeList
-    .map(
-      (store) =>
-        `<div class="store-box">
-          <div class="store-image-container">
-            <img src="/images/ramen.jpeg" alt="" class="store-image">
-          </div>
-          <h1 class="store-name">
-            ${
-              store.restaurantName.length > 14
-                ? `${store.restaurantName.slice(0, 14)}...`
-                : store.restaurantName
-            }
-          </h1>
-        </div>`
-    )
+    .map((store) => {
+      // 店舗名の表示用変数
+      const displayName =
+        store.restaurantName.length > 14
+          ? `${store.restaurantName.slice(0, 14)}...`
+          : store.restaurantName;
+
+      return `
+        <div class="store-box">
+          <a href="#">
+            <div class="store-image-container">
+              <img 
+                src="${store.logoUrl}" 
+                alt="${store.restaurantName}" 
+                class="store-image"
+              >
+            </div>
+            <div class="store-name">
+              ${displayName}
+            </div>
+          </a>
+        </div>
+      `;
+    })
     .join("");
+
   $storeList.html(storeHtml);
 }
 
 $(function () {
-  renderGenreList();
-  // 検索入力のイベントハンドラを設定
+  // 初期データの読み込み
+  Promise.all([fetchGenres(), fetchRestaurantsWithLogos()])
+    .then(function ([genres, restaurants]) {
+      // グローバル変数に保存
+      allGenres = genres;
+      allStores = restaurants;
+
+      // UI初期化
+      renderGenreList(genres);
+    })
+    .catch(function (error) {
+      alert("データの初期化に失敗しました:", error);
+    });
+
   $(".search-input").on("input", function () {
     handleSearch($(this).val());
   });
+
   // フォームのデフォルト送信を防止
   $(".search-form").on("submit", function (e) {
     e.preventDefault();

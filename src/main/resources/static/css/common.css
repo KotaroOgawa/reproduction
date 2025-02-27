@@ -83,7 +83,7 @@ body {
 .store-box {
   border: 1px solid black;
   border-radius: 0.5rem;
-  height: 12rem;
+  height: 14rem;
   margin-top: 1rem;
   position: relative;
 }
@@ -99,8 +99,8 @@ body {
 }
 
 .store-image-container {
-  height: 70%;
-  padding: 1.5rem;
+  height: 75%;
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,6 +113,8 @@ body {
   max-height: 100%;
   width: auto;
   height: auto;
+  object-fit: contain;
+  min-width: 70%;
 }
 
 .store-name {
